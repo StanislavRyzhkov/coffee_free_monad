@@ -17,9 +17,9 @@ lazy val common = (project in file("."))
     libraryDependencies ++= Seq(
       "org.typelevel" %% "cats-core" % "2.1.1",
       "org.typelevel" %% "cats-free" % "2.1.1",
-      "org.scalatest"         %% "scalatest"            % "3.2.0" % Test,
-      "org.scalatest"         %% "scalatest-core"       % "3.2.0",
-      "org.scalatest"         %% "scalatest-funsuite"   % "3.2.0" % Test
+      "org.scalatest" %% "scalatest" % "3.2.0" % Test,
+      "org.scalatest" %% "scalatest-core" % "3.2.0",
+      "org.scalatest" %% "scalatest-funsuite" % "3.2.0" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
