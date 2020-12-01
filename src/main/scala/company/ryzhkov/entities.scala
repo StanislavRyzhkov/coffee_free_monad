@@ -1,15 +1,16 @@
 package company.ryzhkov
 
-case class CoffeeId(value: Long) extends AnyVal
+case class CoffeeRecord(id: Long = 0, countryId: Long, name: String, price: BigDecimal, isPremium: Boolean)
 
-case class Coffee(id: Option[CoffeeId], country: Country, name: String, price: BigDecimal, isPremium: Boolean)
+case class CountryRecord(id: Long = 0, name: String)
 
-case class CountryId(value: Long) extends AnyVal
+case class CoffeeInfo(name: String, country: String, priceBeforeDiscount: BigDecimal)
 
-case class Country(id: Option[CountryId], name: String)
+case class CoffeeInfoWithDiscount(
+  name:                String,
+  country:             String,
+  priceBeforeDiscount: BigDecimal,
+  priceAfterDiscount:  BigDecimal
+)
 
-case class CoffeeInfo(name: String, country: String, priceBeforeDiscount: BigDecimal, priceAfterDiscount: BigDecimal)
-
-case class UserId(value: Long) extends AnyVal
-
-case class User(id: UserId, username: String, email: String)
+case class User(id: Long, username: String, email: String)
