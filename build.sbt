@@ -15,6 +15,11 @@ lazy val common = (project in file("."))
     semanticdbVersion := "0.9.24",
     addCompilerPlugin(scalafixSemanticdb),
     libraryDependencies ++= Seq(
+      "org.postgresql" % "postgresql" % "42.2.14",
+      "com.typesafe.slick" %% "slick" % "3.3.3",
+      "org.slf4j" % "slf4j-nop" % "1.6.4",
+      "com.typesafe.slick" %% "slick-hikaricp" % "3.3.3",
+      "com.typesafe" % "config" % "1.4.1",
       "org.typelevel" %% "cats-core" % "2.1.1",
       "org.typelevel" %% "cats-free" % "2.1.1",
       "org.scalatest" %% "scalatest" % "3.2.0" % Test,

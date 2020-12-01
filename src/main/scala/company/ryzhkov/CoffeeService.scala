@@ -10,27 +10,32 @@ object CoffeeService {
   val discount = 0.25
 
   def getInfo(
-    name:       String
-  )(implicit C: CoffeeRepositoryOps[Eff2], L: LoggerOps[Eff2], S: SenderOps[Eff2]): Free[Eff2, CoffeeInfo] = {
+    name: String
+  )(implicit
+    C:    CoffeeRepositoryOps[Eff2],
+    L:    LoggerOps[Eff2],
+    S:    SenderOps[Eff2]
+  ): Free[Eff2, CoffeeInfoWithDiscount] = {
 
     import C._, L._, S._
 
     for {
-      coffeeOpt <- getByName(name)
-      coffeInfo  = coffeeOpt.map(toCoffeeInfo).getOrElse(throw new RuntimeException("Not found"))
-      _         <- sendMessage(s"$coffeInfo was selected")
-      _         <- info("Operation finished")
-    } yield coffeInfo
+      coffeeInfoOpt        <- getByName(name)
+      coffeInfoWithDiscount =
+        coffeeInfoOpt.map(toCoffeeInfoWithDiscount).getOrElse(throw new RuntimeException("Not found"))
+      _                    <- sendMessage(s"$coffeInfoWithDiscount was selected")
+      _                    <- info("Operation finished")
+    } yield coffeInfoWithDiscount
   }
 
-  def toCoffeeInfo(coffee: Coffee): CoffeeInfo = {
-    val Coffee(_, country, name, price, _) = coffee
+  def toCoffeeInfoWithDiscount(coffee: CoffeeInfo): CoffeeInfoWithDiscount = {
+    val CoffeeInfo(name, country, priceBeforeDiscount) = coffee
 
-    CoffeeInfo(
+    CoffeeInfoWithDiscount(
       name = name,
-      country = country.name,
-      priceBeforeDiscount = price,
-      priceAfterDiscount = price * (1 - discount)
+      country = country,
+      priceBeforeDiscount = priceBeforeDiscount,
+      priceAfterDiscount = priceBeforeDiscount * (1 - discount)
     )
   }
 }

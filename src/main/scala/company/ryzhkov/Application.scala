@@ -1,16 +1,12 @@
 package company.ryzhkov
-
-import cats.Id
-import cats.~>
-import company.ryzhkov.CoffeeService.Eff
-import company.ryzhkov.CoffeeService.Eff2
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.Failure
+import scala.util.Success
 
 object Application extends App {
 
-  val inter1: Eff ~> Id  = CoffeeRepositoryInterpreter or LoggerInterpreter
-  val inter2: Eff2 ~> Id = SenderInterpreter or inter1
-
-  val res = CoffeeService.getInfo("expresso").foldMap(inter2)
-
-  println(res)
+  Controller.start.onComplete {
+    case Success(value)     => println(value)
+    case Failure(exception) => println(exception.getMessage())
+  }
 }
